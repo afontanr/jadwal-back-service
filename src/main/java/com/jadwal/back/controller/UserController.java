@@ -1,12 +1,14 @@
 package com.jadwal.back.controller;
 
 import com.jadwal.back.config.exception.EmptyListException;
-import com.jadwal.back.config.exception.InvalidFormatException;
+import com.jadwal.back.config.exception.NotFoundException;
+import com.jadwal.back.config.exception.SomeErrorException;
+import com.jadwal.back.model.PwdChange;
 import com.jadwal.back.model.UserRequest;
 import com.jadwal.back.model.UserResponse;
 import com.jadwal.back.service.interfaces.UserService;
+import com.jadwal.back.utils.Constants;
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -35,10 +37,11 @@ public class UserController {
   }
 
   @RequestMapping(method = RequestMethod.GET)
-  public List<UserResponse> findAllUsers(HttpServletResponse servletResponse){
+  @ResponseStatus(HttpStatus.OK)
+  public List<UserResponse> findAllUsers(){
     List<UserResponse> response = userService.getAllUsers();
     if(response.isEmpty()){
-      throw new EmptyListException("Lista vacía");
+      throw new EmptyListException(Constants.EMPTY_LIST);
     }
     return response;
   }
@@ -46,7 +49,39 @@ public class UserController {
   @RequestMapping(value = "/{idUser}", method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
   public UserResponse getUserById(@PathVariable("idUser") String idUser){
-    return userService.getUserById(idUser);
+    UserResponse userResponse = userService.getUserById(idUser);
+    if(userResponse == null){
+      throw new NotFoundException(Constants.USER_NOT_FOUND);
+    }
+    return userResponse;
   }
 
+  @RequestMapping(value = "/{idUser}", method = RequestMethod.PUT)
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  public UserResponse modifyUserData(@PathVariable("idUser") String idUser,
+      @Validated @RequestBody UserRequest userRequest){
+    UserResponse userResponse = userService.modifyUserData(idUser, userRequest);
+    if(userResponse == null){
+      throw new NotFoundException(Constants.USER_NOT_FOUND);
+    }
+    return userResponse;
+  }
+
+  @RequestMapping(value = "/{idUser}/password", method = RequestMethod.PUT)
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  public UserResponse modifyUserPwd(@PathVariable("idUser") String idUser,
+      @RequestBody PwdChange pwdChange){
+    UserResponse userResponse = userService.modifyUserPwd(idUser, pwdChange);
+    if(userResponse == null){
+      throw new SomeErrorException(Constants.SOME_ERROR);
+    }
+    return userResponse;
+  }
+
+  @RequestMapping(value = "/{idUser}", method = RequestMethod.DELETE)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteUser(@PathVariable("idUser") String idUser){
+    userService.deleteUser(idUser);
+  }
+  
 }

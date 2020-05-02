@@ -3,17 +3,17 @@ package com.jadwal.back.model;
 import com.jadwal.back.utils.Email;
 
 public class UserRequest {
+
   private String name;
   private String idRol;
   private String surname;
+  private String office;
+
   @Email
   private String email;
-  private String office;
-  private String newPassword = "";
-  private String repeatPassword = "";
+
 
   public UserRequest() {  }
-
 
   public String getName() {
     return name;
@@ -47,22 +47,6 @@ public class UserRequest {
     this.office = office;
   }
 
-  public String getNewPassword() {
-    return newPassword;
-  }
-
-  public void setNewPassword(String newPassword) {
-    this.newPassword = newPassword;
-  }
-
-  public String getRepeatPassword() {
-    return repeatPassword;
-  }
-
-  public void setRepeatPassword(String repeatPassword) {
-    this.repeatPassword = repeatPassword;
-  }
-
   public String getIdRol() {
     return idRol;
   }
@@ -70,4 +54,5 @@ public class UserRequest {
   public void setIdRol(String idRol) {
     this.idRol = idRol;
   }
+
 }

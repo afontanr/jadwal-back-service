@@ -4,17 +4,17 @@ import com.jadwal.back.model.UserRequest;
 import com.jadwal.back.model.UserResponse;
 import com.jadwal.back.repositories.entities.UserDto;
 
-public class UserMapper {
+public class Mapper {
 
-  private UserMapper() {  }
+  private Mapper() {  }
 
-  public static UserDto mapUserRequestToUserDto(UserRequest userRequest, String idState){
+  public static UserDto mapToDto(UserRequest userRequest, String idState){
     return new UserDto(StringGenerator.generateId(), userRequest.getIdRol(), idState,
         userRequest.getName(), userRequest.getSurname(), userRequest.getEmail(),
         userRequest.getOffice(), userRequest.getNewPassword());
   }
 
-  public static UserResponse mapUserDtoToUserResponse(UserDto userDto){
+  public static UserResponse mapToResponse(UserDto userDto){
     return new UserResponse(userDto.getIdUser(), userDto.getName(), userDto.getSurname(),
         userDto.getEmail(), userDto.getOffice());
   }
