@@ -83,5 +83,5 @@ public class UserController {
   public void deleteUser(@PathVariable("idUser") String idUser){
     userService.deleteUser(idUser);
   }
-  
+
 }
