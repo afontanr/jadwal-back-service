@@ -5,6 +5,7 @@ import com.jadwal.back.repositories.entities.TokenDto;
 import com.jadwal.back.utils.Constants;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -44,6 +45,22 @@ public class SessionSupplier {
     Map<String, String> mapResponse = Collections.EMPTY_MAP;
     mapResponse.put(Constants.TOKEN_NAME, token);
     mapResponse.put(Constants.ID_USER_NAME, idUser);
+
     return mapResponse;
+  }
+
+  public static Map<String, String> getAttributesFromSession(HttpServletRequest servletRequest){
+    String token = String.valueOf(servletRequest.getAttribute(Constants.TOKEN_NAME));
+    String idUser = String.valueOf(servletRequest.getAttribute(Constants.ID_USER_NAME));
+
+    Map<String, String> map = new HashMap<>();
+    map.put(Constants.ID_USER_NAME, idUser);
+    map.put(Constants.TOKEN_NAME, token);
+
+    return map;
+  }
+
+  public static Boolean isAdmin(String idRol){
+    return Constants.ID_ADMIN_ROL.equals(idRol);
   }
 }

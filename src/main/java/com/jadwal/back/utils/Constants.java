@@ -13,10 +13,12 @@ public class Constants {
   public static String ID_STATE_ACTIVE = "ACTIVE";
 
   public static String USER_NOT_FOUND = "Usuario no encontrado";
+  public static String NOT_FOUND = "Elemento no encontrado";
   public static String EMPTY_LIST = "Lista vacía";
   public static String SOME_ERROR = "Ha ocurrido un error";
   public static String AUTH_ERROR = "Error en el login";
 
   public static String ID_ADMIN_ROL = "ADMIN";
+  public static String DATE_FORMAT = "dd/MM/aaaa";
 
 }

@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS states(
 
 CREATE TABLE IF NOT EXISTS exams(
     id_exam varchar(255) PRIMARY KEY,
-    description varchar(255),
+    name varchar(255),
+    date varchar(255),
     date_start varchar(255),
     date_end varchar(255)
 );
