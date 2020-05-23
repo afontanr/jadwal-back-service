@@ -9,6 +9,8 @@ import com.jadwal.back.model.UserResponse;
 import com.jadwal.back.service.interfaces.UserService;
 import com.jadwal.back.utils.Constants;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -48,7 +50,7 @@ public class UserController {
 
   @RequestMapping(value = "/{idUser}", method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
-  public UserResponse getUserById(@PathVariable("idUser") String idUser){
+  public UserResponse getUserById(HttpServletRequest request, HttpServletResponse response, @PathVariable("idUser") String idUser){
     UserResponse userResponse = userService.getUserById(idUser);
     if(userResponse == null){
       throw new NotFoundException(Constants.USER_NOT_FOUND);

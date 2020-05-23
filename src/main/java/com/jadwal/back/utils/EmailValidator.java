@@ -18,5 +18,5 @@ public class EmailValidator implements ConstraintValidator<Email, String> {
   @Override
   public boolean isValid(final String value, final ConstraintValidatorContext context) {
     return !StringUtils.isNullOrEmpty(value) && emailPattern.matcher(value).matches() && value.contains("upm");
-    }
+  }
 }

@@ -7,15 +7,18 @@ public class UserResponse {
   private String surname;
   private String email;
   private String office;
+  private Boolean isAdmin;
 
   public UserResponse() {  }
 
-  public UserResponse(String idUser, String name, String surname, String email, String office) {
+  public UserResponse(String idUser, String name, String surname, String email,
+      String office, Boolean isAdmin) {
     this.idUser = idUser;
     this.name = name;
     this.surname = surname;
     this.email = email;
     this.office = office;
+    this.isAdmin = isAdmin;
   }
 
   public String getName() {
@@ -57,4 +60,13 @@ public class UserResponse {
   public void setIdUser(String idUser) {
     this.idUser = idUser;
   }
+
+  public Boolean getAdmin() {
+    return isAdmin;
+  }
+
+  public void setAdmin(Boolean admin) {
+    isAdmin = admin;
+  }
 }
+
