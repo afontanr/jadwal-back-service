@@ -2,9 +2,12 @@ package com.jadwal.back.utils;
 
 import com.jadwal.back.model.ExamRequest;
 import com.jadwal.back.model.ExamResponse;
+import com.jadwal.back.model.QuestionRequest;
+import com.jadwal.back.model.QuestionResponse;
 import com.jadwal.back.model.UserRequest;
 import com.jadwal.back.model.UserResponse;
 import com.jadwal.back.repositories.entities.ExamDto;
+import com.jadwal.back.repositories.entities.QuestionDto;
 import com.jadwal.back.repositories.entities.TokenDto;
 import com.jadwal.back.repositories.entities.UserDto;
 import com.jadwal.back.utils.supplier.SessionSupplier;
@@ -27,6 +30,11 @@ public class Mapper {
         examRequest.getDateStart(), examRequest.getDateEnd());
   }
 
+  public static QuestionDto mapToDto(String idExam, QuestionRequest questionRequest){
+    return new QuestionDto(StringGenerator.generateId(), questionRequest.getIdUser(),
+        idExam, questionRequest.getDescription());
+  }
+
   public static UserResponse mapToResponse(UserDto userDto){
     return new UserResponse(userDto.getIdUser(), userDto.getName(), userDto.getSurname(),
         userDto.getEmail(), userDto.getOffice(), SessionSupplier.isAdmin(userDto.getIdRol()));
@@ -35,6 +43,11 @@ public class Mapper {
   public static ExamResponse mapToResponse(ExamDto examDto){
     return new ExamResponse(examDto.getIdExam(), examDto.getName(), examDto.getDate(),
         examDto.getDateStart(), examDto.getDateEnd());
+  }
+
+  public static QuestionResponse mapToResponse(QuestionDto questionDto){
+    return new QuestionResponse(questionDto.getIdQuestion(), questionDto.getIdUser(),
+        questionDto.getIdExam(), questionDto.getDescription());
   }
 
 }
