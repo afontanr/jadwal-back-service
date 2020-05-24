@@ -2,11 +2,14 @@ package com.jadwal.back.utils;
 
 import com.jadwal.back.model.ExamRequest;
 import com.jadwal.back.model.ExamResponse;
+import com.jadwal.back.model.IntervalRequest;
+import com.jadwal.back.model.IntervalResponse;
 import com.jadwal.back.model.QuestionRequest;
 import com.jadwal.back.model.QuestionResponse;
 import com.jadwal.back.model.UserRequest;
 import com.jadwal.back.model.UserResponse;
 import com.jadwal.back.repositories.entities.ExamDto;
+import com.jadwal.back.repositories.entities.IntervalDto;
 import com.jadwal.back.repositories.entities.QuestionDto;
 import com.jadwal.back.repositories.entities.TokenDto;
 import com.jadwal.back.repositories.entities.UserDto;
@@ -35,6 +38,10 @@ public class Mapper {
         idExam, questionRequest.getDescription());
   }
 
+  public static IntervalDto mapToDto(IntervalRequest intervalRequest){
+    return new IntervalDto(StringGenerator.generateId(), intervalRequest.getDescription());
+  }
+
   public static UserResponse mapToResponse(UserDto userDto){
     return new UserResponse(userDto.getIdUser(), userDto.getName(), userDto.getSurname(),
         userDto.getEmail(), userDto.getOffice(), SessionSupplier.isAdmin(userDto.getIdRol()));
@@ -48,6 +55,10 @@ public class Mapper {
   public static QuestionResponse mapToResponse(QuestionDto questionDto){
     return new QuestionResponse(questionDto.getIdQuestion(), questionDto.getIdUser(),
         questionDto.getIdExam(), questionDto.getDescription());
+  }
+
+  public static IntervalResponse mapToResponse(IntervalDto intervalDto){
+    return new IntervalResponse(intervalDto.getIdInterval(), intervalDto.getDescription());
   }
 
 }
