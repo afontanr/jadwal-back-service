@@ -46,11 +46,12 @@ CREATE TABLE IF NOT EXISTS questions(
 );
 
 CREATE TABLE IF NOT EXISTS availabilities(
-    id_available varchar(255) PRIMARY KEY,
+    id_availability varchar(255) PRIMARY KEY,
     id_question varchar(255),
     id_interval varchar(255),
     day varchar(255),
     capacity integer,
+    counter integer,
     FOREIGN KEY (id_question) REFERENCES questions(id_question) ON DELETE CASCADE,
     FOREIGN KEY (id_interval) REFERENCES intervals(id_interval) ON DELETE CASCADE
 );

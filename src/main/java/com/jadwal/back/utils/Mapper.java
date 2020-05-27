@@ -1,5 +1,7 @@
 package com.jadwal.back.utils;
 
+import com.jadwal.back.model.AvailabilityRequest;
+import com.jadwal.back.model.AvailabilityResponse;
 import com.jadwal.back.model.ExamRequest;
 import com.jadwal.back.model.ExamResponse;
 import com.jadwal.back.model.IntervalRequest;
@@ -8,6 +10,7 @@ import com.jadwal.back.model.QuestionRequest;
 import com.jadwal.back.model.QuestionResponse;
 import com.jadwal.back.model.UserRequest;
 import com.jadwal.back.model.UserResponse;
+import com.jadwal.back.repositories.entities.AvailabilityDto;
 import com.jadwal.back.repositories.entities.ExamDto;
 import com.jadwal.back.repositories.entities.IntervalDto;
 import com.jadwal.back.repositories.entities.QuestionDto;
@@ -38,6 +41,12 @@ public class Mapper {
         idExam, questionRequest.getDescription());
   }
 
+  public static AvailabilityDto mapToDto(String idQuestion, AvailabilityRequest availabilityRequest){
+    return new AvailabilityDto(StringGenerator.generateId(), idQuestion,
+        availabilityRequest.getIdInterval(), availabilityRequest.getDay(),
+        availabilityRequest.getCapacity(), 0);
+  }
+
   public static IntervalDto mapToDto(IntervalRequest intervalRequest){
     return new IntervalDto(StringGenerator.generateId(), intervalRequest.getDescription());
   }
@@ -59,6 +68,12 @@ public class Mapper {
 
   public static IntervalResponse mapToResponse(IntervalDto intervalDto){
     return new IntervalResponse(intervalDto.getIdInterval(), intervalDto.getDescription());
+  }
+
+  public static AvailabilityResponse mapToResponse(AvailabilityDto availabilityDto){
+    return new AvailabilityResponse(availabilityDto.getIdAvailability(),
+        availabilityDto.getIdQuestion(), availabilityDto.getIdInterval(),
+        availabilityDto.getDay(), availabilityDto.getCapacity(), availabilityDto.getCounter());
   }
 
 }
