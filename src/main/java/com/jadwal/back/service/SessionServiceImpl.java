@@ -10,6 +10,7 @@ import com.jadwal.back.service.interfaces.SessionService;
 import com.jadwal.back.utils.Mapper;
 import com.jadwal.back.utils.StringGenerator;
 import java.util.Objects;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,12 +35,34 @@ public class SessionServiceImpl implements SessionService {
     return Mapper.mapToResponse(userDto);
   }
 
+  public UserResponse getLoggedUser(String idUser, String token){
+    Boolean match = tokenRepository.existsByIdTokenAndIdUser(token, idUser);
+    if(!match){
+      return null;
+    }
+    UserDto userDto = userRepository.findByIdUser(idUser);
+
+    if(Objects.isNull(userDto)){
+      return null;
+    }
+
+    return Mapper.mapToResponse(userDto);
+  }
+
   public TokenDto createToken(String email){
     UserDto userDto = userRepository.findByEmail(email);
     if(Objects.isNull(userDto)){
       return null;
     }
     String token = StringGenerator.generateId();
+    TokenDto tokenDto = Mapper.mapToDto(userDto,token);
+    tokenRepository.save(tokenDto);
+
     return Mapper.mapToDto(userDto, token);
+  }
+
+  @Transactional
+  public void removeToken(String idUser, String token){
+    tokenRepository.deleteByIdTokenAndIdUser(token, idUser);
   }
 }

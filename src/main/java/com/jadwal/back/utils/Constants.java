@@ -17,6 +17,7 @@ public class Constants {
   public static String EMPTY_LIST = "Lista vacía";
   public static String SOME_ERROR = "Ha ocurrido un error";
   public static String AUTH_ERROR = "Error en el login";
+  public static String ALREADY_EXISTS = "El usuario ya existe";
 
   public static String ID_ADMIN_ROL = "ADMIN";
   public static String DATE_FORMAT = "dd/MM/aaaa";

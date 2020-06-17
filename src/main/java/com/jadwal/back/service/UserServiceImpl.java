@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -30,6 +31,10 @@ public class UserServiceImpl implements UserService {
   }
 
   public UserResponse saveUser(UserRequest userRequest) {
+    Boolean exists = userRepository.existsByEmail(userRequest.getEmail());
+    if(exists){
+      return null;
+    }
     UserDto userDto =  Mapper.mapToDto(userRequest, Constants.ID_STATE_STAND_BY);
     userDto = userRepository.save(userDto);
     return Mapper.mapToResponse(userDto);
@@ -85,6 +90,7 @@ public class UserServiceImpl implements UserService {
     return userResponse;
   }
 
+  @Transactional
   public void deleteUser(String idUser){
     userRepository.deleteByIdUser(idUser);
   }

@@ -9,6 +9,7 @@ import com.jadwal.back.model.UserResponse;
 import com.jadwal.back.service.interfaces.UserService;
 import com.jadwal.back.utils.Constants;
 import java.util.List;
+import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,11 @@ public class UserController {
   @RequestMapping(method = RequestMethod.POST)
   @ResponseStatus(HttpStatus.CREATED)
   public UserResponse saveUser(@Validated @RequestBody UserRequest userRequest){
-     return userService.saveUser(userRequest);
+     UserResponse userResponse = userService.saveUser(userRequest);
+     if(Objects.isNull(userResponse)){
+       throw new SomeErrorException(Constants.ALREADY_EXISTS);
+     }
+     return userResponse;
   }
 
   @RequestMapping(method = RequestMethod.GET)
@@ -50,7 +55,7 @@ public class UserController {
 
   @RequestMapping(value = "/{idUser}", method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
-  public UserResponse getUserById(HttpServletRequest request, HttpServletResponse response, @PathVariable("idUser") String idUser){
+  public UserResponse getUserById(@PathVariable("idUser") String idUser){
     UserResponse userResponse = userService.getUserById(idUser);
     if(userResponse == null){
       throw new NotFoundException(Constants.USER_NOT_FOUND);
@@ -59,7 +64,7 @@ public class UserController {
   }
 
   @RequestMapping(value = "/{idUser}", method = RequestMethod.PUT)
-  @ResponseStatus(HttpStatus.ACCEPTED)
+  @ResponseStatus(HttpStatus.OK)
   public UserResponse modifyUserData(@PathVariable("idUser") String idUser,
       @Validated @RequestBody UserRequest userRequest){
     UserResponse userResponse = userService.modifyUserData(idUser, userRequest);
@@ -70,7 +75,7 @@ public class UserController {
   }
 
   @RequestMapping(value = "/{idUser}/password", method = RequestMethod.PUT)
-  @ResponseStatus(HttpStatus.ACCEPTED)
+  @ResponseStatus(HttpStatus.OK)
   public UserResponse modifyUserPwd(@PathVariable("idUser") String idUser,
       @RequestBody PwdChange pwdChange){
     UserResponse userResponse = userService.modifyUserPwd(idUser, pwdChange);

@@ -31,24 +31,33 @@ public class QuestionController {
 
   @RequestMapping(method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
-  public List<QuestionResponse> findAll(@PathVariable("idExam") String idExam){
-    List<QuestionResponse> questions = questionService.findAllQuestions(idExam);
+  public List<QuestionResponse> findAll(@PathVariable("idExam") String idExam,
+      @RequestParam(value = "idUser", required = false) String idUser){
+    List<QuestionResponse> questions;
+
+    if(Objects.isNull(idUser)){
+      questions = questionService.findAllQuestions(idExam);
+    } else {
+      questions = questionService.findAllQuestionsFromUser(idExam, idUser);
+    }
     if(questions.isEmpty()){
       throw new EmptyListException(Constants.EMPTY_LIST);
     }
     return questions;
   }
-
+/*
   @RequestMapping(method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
   public List<QuestionResponse> findAllFromUser(@PathVariable("idExam") String idExam,
-      @RequestParam("idUser") String idUser){
+      @RequestParam(value = "idUser", required = true) String idUser){
     List<QuestionResponse> questions = questionService.findAllQuestionsFromUser(idExam, idUser);
     if(questions.isEmpty()){
       throw new EmptyListException(Constants.EMPTY_LIST);
     }
     return questions;
   }
+
+ */
 
   @RequestMapping(value = "/{idQuestion}", method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)

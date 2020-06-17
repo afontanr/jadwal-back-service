@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "interval")
+@Table(name = "intervals")
 public class IntervalDto {
 
   @Id

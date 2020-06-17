@@ -2,6 +2,8 @@ package com.jadwal.back.utils;
 
 import com.jadwal.back.model.AvailabilityRequest;
 import com.jadwal.back.model.AvailabilityResponse;
+import com.jadwal.back.model.BookingRequest;
+import com.jadwal.back.model.BookingResponse;
 import com.jadwal.back.model.ExamRequest;
 import com.jadwal.back.model.ExamResponse;
 import com.jadwal.back.model.IntervalRequest;
@@ -11,6 +13,7 @@ import com.jadwal.back.model.QuestionResponse;
 import com.jadwal.back.model.UserRequest;
 import com.jadwal.back.model.UserResponse;
 import com.jadwal.back.repositories.entities.AvailabilityDto;
+import com.jadwal.back.repositories.entities.BookingDto;
 import com.jadwal.back.repositories.entities.ExamDto;
 import com.jadwal.back.repositories.entities.IntervalDto;
 import com.jadwal.back.repositories.entities.QuestionDto;
@@ -51,6 +54,11 @@ public class Mapper {
     return new IntervalDto(StringGenerator.generateId(), intervalRequest.getDescription());
   }
 
+  public static BookingDto mapToDto(BookingRequest bookingRequest){
+    return new BookingDto(StringGenerator.generateId(), bookingRequest.getIdAvailable(),
+        Constants.ID_STATE_STAND_BY, bookingRequest.getEmail(), Constants.EMPTY);
+  }
+
   public static UserResponse mapToResponse(UserDto userDto){
     return new UserResponse(userDto.getIdUser(), userDto.getName(), userDto.getSurname(),
         userDto.getEmail(), userDto.getOffice(), SessionSupplier.isAdmin(userDto.getIdRol()));
@@ -70,10 +78,15 @@ public class Mapper {
     return new IntervalResponse(intervalDto.getIdInterval(), intervalDto.getDescription());
   }
 
-  public static AvailabilityResponse mapToResponse(AvailabilityDto availabilityDto){
+  public static AvailabilityResponse mapToResponse(AvailabilityDto availabilityDto, String descInterval){
     return new AvailabilityResponse(availabilityDto.getIdAvailability(),
-        availabilityDto.getIdQuestion(), availabilityDto.getIdInterval(),
+        availabilityDto.getIdQuestion(), availabilityDto.getIdInterval(), descInterval,
         availabilityDto.getDay(), availabilityDto.getCapacity(), availabilityDto.getCounter());
+  }
+
+  public static BookingResponse mapToResponse(BookingDto bookingDto){
+    return new BookingResponse(bookingDto.getIdBooking(),
+        bookingDto.getIdAvailable(), bookingDto.getEmail());
   }
 
 }

@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS bookings(
     id_state varchar(255),
     email varchar(255),
     created_at varchar(255),
-    FOREIGN KEY (id_available) REFERENCES availabilities(id_available) ON DELETE CASCADE,
+    FOREIGN KEY (id_available) REFERENCES availabilities(id_availability) ON DELETE CASCADE,
     FOREIGN KEY (id_state) REFERENCES states(id_state) ON DELETE CASCADE
 );
 

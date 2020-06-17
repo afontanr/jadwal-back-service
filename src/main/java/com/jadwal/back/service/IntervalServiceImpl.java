@@ -9,6 +9,7 @@ import com.jadwal.back.utils.Mapper;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,7 @@ public class IntervalServiceImpl implements IntervalService {
     return Mapper.mapToResponse(interval);
   }
 
+  @Transactional
   public void deleteInterval(String idInterval){
     intervalRepository.deleteByIdInterval(idInterval);
   }

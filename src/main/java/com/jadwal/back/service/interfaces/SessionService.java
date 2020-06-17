@@ -8,5 +8,7 @@ public interface SessionService {
 
   UserResponse authenticate(LoginRequest loginRequest);
   TokenDto createToken(String email);
+  UserResponse getLoggedUser(String idUser, String token);
+  void removeToken(String idUser, String token);
 
 }

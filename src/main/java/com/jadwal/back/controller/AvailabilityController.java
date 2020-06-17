@@ -70,7 +70,7 @@ public class AvailabilityController {
     return availability;
   }
 
-  @RequestMapping(value = "/{idAvailability}", method = RequestMethod.POST)
+  @RequestMapping(value = "/{idAvailability}", method = RequestMethod.DELETE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteAvailability(@PathVariable("idQuestion") String idQuestion,
       @PathVariable("idAvailability") String idAvailability){

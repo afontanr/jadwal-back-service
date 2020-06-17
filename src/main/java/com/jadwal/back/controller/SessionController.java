@@ -1,5 +1,6 @@
 package com.jadwal.back.controller;
 
+import com.jadwal.back.config.exception.EmptyListException;
 import com.jadwal.back.config.exception.SomeErrorException;
 import com.jadwal.back.model.LoginRequest;
 import com.jadwal.back.model.UserResponse;
@@ -46,10 +47,34 @@ public class SessionController {
     return userResponse;
   }
 
+  @RequestMapping(value = "/userLogged",method = RequestMethod.GET)
+  @ResponseStatus(HttpStatus.OK)
+  public UserResponse getLoggedUser(HttpServletRequest servletRequest){
+    HttpSession session = servletRequest.getSession(false);
+    if(Objects.isNull(session)){
+      throw new EmptyListException(Constants.EMPTY);
+    }
+    String idUser = (String) session.getAttribute(Constants.ID_USER_NAME);
+    String token = (String) session.getAttribute(Constants.TOKEN_NAME);
+
+    UserResponse userResponse = sessionService.getLoggedUser(idUser, token);
+
+    if(Objects.isNull(userResponse)){
+      throw new EmptyListException(Constants.EMPTY);
+    }
+
+    return userResponse;
+  }
+
   @RequestMapping(value = "/logout", method = RequestMethod.POST)
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void logout(HttpServletRequest servletRequest){
-    servletRequest.getSession(false);
+    HttpSession session = servletRequest.getSession(false);
+    String idUser = (String) session.getAttribute(Constants.ID_USER_NAME);
+    String token = (String) session.getAttribute(Constants.TOKEN_NAME);
+    sessionService.removeToken(idUser, token);
+    session.removeAttribute(Constants.TOKEN_NAME);
+    session.removeAttribute(Constants.ID_USER_NAME);
     servletRequest.getSession().invalidate();
   }
 }

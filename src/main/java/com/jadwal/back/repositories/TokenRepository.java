@@ -10,6 +10,7 @@ public interface TokenRepository extends JpaRepository<TokenDto, String> {
 
   TokenDto save(TokenDto tokenDto);
   TokenDto findByIdTokenAndIdUser(String idToken, String idUser);
+  Boolean existsByIdTokenAndIdUser(String idToken, String idUser);
   void deleteByIdTokenAndIdUser(String idToken, String idUser);
 
 }
